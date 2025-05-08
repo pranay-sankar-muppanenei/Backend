@@ -34,3 +34,4 @@ app.get('/',async (request,response)=>{
     const array=await db.all(query);
     response.send(array);
 });
+console.log("hello");
