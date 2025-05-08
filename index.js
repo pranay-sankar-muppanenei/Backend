@@ -30,8 +30,7 @@ const init=async ()=>{
 init();
 
 app.get('/',async (request,response)=>{
-    const query=`select *from profile;`;
+    const query=`select *from author;`;
     const array=await db.all(query);
     response.send(array);
 });
-console.log("hello");
