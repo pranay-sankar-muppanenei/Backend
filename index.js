@@ -1,11 +1,16 @@
 const express=require("express");
 const path=require("path");
 const cors=require("cors");
+const bcrypt = require("bcrypt");
 
 const {open}=require("sqlite");
 const sqlite3=require("sqlite3");
 const app=express();
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000', // allow your frontend origin
+    methods: ['GET', 'POST'],
+    credentials: true,
+  }));
 app.use(express.json());
 
 const dbPath=path.join(__dirname,"profile.db");
@@ -18,7 +23,7 @@ const init=async ()=>{
         filename:dbPath,
         driver:sqlite3.Database,
     });
-    app.listen(3000,()=>{
+    app.listen(3001,()=>{
         console.log("server running at 3000");
     })}
     catch(e){
@@ -37,7 +42,7 @@ app.get('/',async (request,response)=>{
 app.post("/user/",async(request,response)=>{
     const {username,password}=request.body;
     const hash=await bcrypt.has(password,10);
-    const q="select * from user where username=`${username}`";
+    const q = `SELECT * FROM user WHERE username='${username}'`;
     const dbuser=await db.get(q);
     if(dbuser==undefined){
         const query="insert into user(username,password) values ('${username}','${hash}')";
