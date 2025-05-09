@@ -34,3 +34,17 @@ app.get('/',async (request,response)=>{
     const array=await db.all(query);
     response.send(array);
 });
+app.post("/user/",async(request,response)=>{
+    const {username,password}=request.body;
+    const hash=await bcrypt.has(password,10);
+    const q="select * from user where username=`${username}`";
+    const dbuser=await db.get(q);
+    if(dbuser==undefined){
+        const query="insert into user(username,password) values ('${username}','${hash}')";
+        const response=await db.run(query);
+        response.send('created new user');
+    }
+    else{
+        response.send("user already exits");
+    }
+})

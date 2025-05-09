@@ -1,3 +1,16 @@
 Send Request
 ###
 GET http://localhost:3000/
+
+
+Send Request
+###
+POST http://localhost:3000/user
+Content-Type:application/json
+{
+  "username": "adam_richard",
+  "name": "Adam Richard",
+  "password": "rich",
+  "gender": "male",
+  "location": "Detroit"
+}
